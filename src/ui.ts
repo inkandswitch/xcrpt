@@ -428,7 +428,7 @@ const upload = async (
     url: excerpt.url,
     body: excerpt.description,
     description: excerpt.description,
-    title: comment === '' ? excerpt.title : comment,
+    title: excerpt.title,
     name: excerpt.name,
     selector: excerpt.selector,
     time: new Date(archive.capturedAt),
