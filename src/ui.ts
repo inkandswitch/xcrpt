@@ -396,12 +396,7 @@ const save = async ({ archive, excerpt, save }: Model): Promise<null | Message> 
   return null
 }
 
-const extension = (url: string): string =>
-  new URL(url).pathname
-    .split('/')
-    .pop()!
-    .split('.')
-    .pop()!
+const extension = (url: string): string => new URL(url).pathname.split('/').pop()!.split('.').pop()!
 
 const upload = async (
   excerpt: ScrapeData,
@@ -557,6 +552,7 @@ const excerptHTML = (data: Data, scrollHeight: number) => {
               data.name === '' ? data.title : data.name
             }</span>
           </h3>
+          <a href="https://inkandswitch.github.io/xcrpt/" class="sans-serif link bg-black-90 white hover-black hover-bg-white dib tracked lh-copy tracked-tight ph1 ma0 v-top" style="font-size: 0.1em;">xcr.pt</a>
         </div>
         <div>
           <div
