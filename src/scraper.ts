@@ -81,9 +81,9 @@ export const clipSummary = async (document: Document): Promise<ScrapeData> => {
     url: document.URL,
     icon: scrapeIcon(document.documentElement),
     hero: [...scrapeHeroImgUrls(document.documentElement)],
-    title: scrapeTitle(document.documentElement, ''),
-    description: scrapeDescription(document.documentElement, ''),
-    name: scrapeSiteName(document.documentElement, ''),
+    title: scrapeTitle(document.documentElement, '').trim(),
+    description: scrapeDescription(document.documentElement, '').trim(),
+    name: scrapeSiteName(document.documentElement, '').trim(),
     selector: null,
   }
 }
@@ -92,8 +92,8 @@ export const clipSelection = async (selection: RangeSelection): Promise<ScrapeDa
   const { document } = selection
   const url = document.URL
   const icon = scrapeIcon(document.documentElement)
-  const title = scrapeTitle(document.documentElement, '')
-  const name = scrapeSiteName(document.documentElement, '')
+  const title = scrapeTitle(document.documentElement, '').trim()
+  const name = scrapeSiteName(document.documentElement, '').trim()
   const [firstRange] = selection.ranges()
   const { commonAncestorContainer } = firstRange
 
@@ -111,7 +111,7 @@ export const clipSelection = async (selection: RangeSelection): Promise<ScrapeDa
 
   const images = concat([imgs, scrapeHeroImgUrls(document.documentElement)])
   const hero = [...take(1, images)]
-  const description = selection.toText()
+  const description = selection.toText().trim()
   const selector = getRangeSelector(firstRange)
 
   return { url, icon, hero, title, description, name, selector: [selector] }
@@ -137,7 +137,7 @@ const identity = <a>(x: a): a => x
 
 // Iterables
 
-const filter = function*<a>(p: (item: a) => boolean, source: Iterable<a>): Iterable<a> {
+const filter = function* <a>(p: (item: a) => boolean, source: Iterable<a>): Iterable<a> {
   for (const item of source) {
     if (p(item)) {
       yield item
@@ -145,7 +145,7 @@ const filter = function*<a>(p: (item: a) => boolean, source: Iterable<a>): Itera
   }
 }
 
-const map = function*<a, b>(f: (item: a) => b, source: Iterable<a>): Iterable<b> {
+const map = function* <a, b>(f: (item: a) => b, source: Iterable<a>): Iterable<b> {
   for (const item of source) {
     yield f(item)
   }
@@ -159,7 +159,7 @@ const reduce = <a, b>(reducer: (item: a, state: b) => b, state: b, items: Iterab
   return result
 }
 
-const concat = function*<a>(iterables: Iterable<Iterable<a>>): Iterable<a> {
+const concat = function* <a>(iterables: Iterable<Iterable<a>>): Iterable<a> {
   for (const iterable of iterables) {
     for (const item of iterable) {
       yield item
@@ -167,7 +167,7 @@ const concat = function*<a>(iterables: Iterable<Iterable<a>>): Iterable<a> {
   }
 }
 
-const take = function*<a>(n: number, iterable: Iterable<a>): Iterable<a> {
+const take = function* <a>(n: number, iterable: Iterable<a>): Iterable<a> {
   if (n > 0) {
     let count = 0
     for (const item of iterable) {
@@ -188,7 +188,7 @@ const first = <a>(iterable: Iterable<a>, fallback: a): a => {
 
 // DOM
 
-const query = function*<a>(
+const query = function* <a>(
   selector: string,
   decode: (el: Element) => null | a,
   root: Document | Element | DocumentFragment
