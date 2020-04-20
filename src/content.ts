@@ -13,7 +13,6 @@ import {
   CloseRequest,
 } from './mailbox'
 import { Program, Context } from './program'
-import { publicDecrypt } from 'crypto'
 
 const onUIMessage = (message: MessageEvent) => {
   switch (message.type) {
